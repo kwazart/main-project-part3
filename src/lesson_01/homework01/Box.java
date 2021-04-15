@@ -3,7 +3,7 @@ package lesson_01.homework01;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Box<T extends Fruit> {
+public class Box<T extends Fruit> implements Comparable<Box<?>> {
 	private List<T> fruits;
 
 	public Box() {
@@ -18,16 +18,15 @@ public class Box<T extends Fruit> {
 		fruits.add(fruit);
 	}
 
-	public boolean compare(Box<?> other) {
-		float curWeight = fruits.get(0).getWeight() * fruits.size();
-		float anoWeight = other.getFruits().get(0).getWeight() * other.getFruits().size();
-
-		return  curWeight == anoWeight;
-	}
 
 	public void fillBox(Box<T> other) {
 		fruits.addAll(other.getFruits());
 		other.getFruits().clear();
 	}
 
+	@Override
+	public int compareTo(Box<?> o) {
+		return (int) (fruits.get(0).getWeight() * fruits.size() -
+				o.getFruits().get(0).getWeight() * o.getFruits().size());
+	}
 }
